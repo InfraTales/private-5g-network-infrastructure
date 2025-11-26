@@ -1,0 +1,28 @@
+```mermaid
+sequenceDiagram
+    participant Device as IoT Device
+    participant RU as Radio Unit
+    participant AMF as AMF
+    participant SMF as SMF
+    participant UPF as UPF
+    participant App as Application
+
+    Note over Device,App: Device Registration
+    Device->>RU: Registration request
+    RU->>AMF: Forward registration
+    AMF->>AMF: Authenticate (5G-AKA)
+    AMF-->>Device: Registration accept
+
+    Note over Device,App: PDU Session Establishment
+    Device->>AMF: PDU session request
+    AMF->>SMF: Create session
+    SMF->>UPF: Setup user plane
+    SMF-->>Device: Session established
+
+    Note over Device,App: Data Transfer
+    Device->>RU: User data
+    RU->>UPF: Forward data
+    UPF->>App: Deliver to application
+    App-->>UPF: Response
+    UPF-->>Device: Return data
+```

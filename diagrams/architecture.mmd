@@ -1,0 +1,53 @@
+```mermaid
+graph TD
+    subgraph Devices["Connected Devices"]
+        IoT[IoT Sensors]
+        Mobile[Mobile Devices]
+        AGV[AGVs/Robots]
+        AR[AR/VR Devices]
+    end
+
+    subgraph Radio["Radio Access Network"]
+        RU1[Radio Unit 1]
+        RU2[Radio Unit 2]
+        RU3[Radio Unit 3]
+    end
+
+    subgraph Core["5G Core Network"]
+        AMF[AMF - Access Management]
+        SMF[SMF - Session Management]
+        UPF[UPF - User Plane]
+        PCF[PCF - Policy Control]
+    end
+
+    subgraph AWS["AWS Integration"]
+        VPC[Private VPC]
+        IoTCore[IoT Core]
+        Wavelength[Wavelength Edge]
+        Apps[Applications]
+    end
+
+    subgraph Management["Management"]
+        Console[AWS Console]
+        CloudWatch[CloudWatch]
+        SIM[SIM Management]
+    end
+
+    IoT --> RU1
+    Mobile --> RU2
+    AGV --> RU2
+    AR --> RU3
+    RU1 --> AMF
+    RU2 --> AMF
+    RU3 --> AMF
+    AMF --> SMF
+    SMF --> UPF
+    PCF --> SMF
+    UPF --> VPC
+    VPC --> IoTCore
+    VPC --> Wavelength
+    VPC --> Apps
+    Console --> Core
+    CloudWatch --> Core
+    SIM --> AMF
+```

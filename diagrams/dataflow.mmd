@@ -1,0 +1,44 @@
+```mermaid
+graph LR
+    subgraph Devices["Device Layer"]
+        Sensors[IoT Sensors]
+        Machines[Industrial Machines]
+        Handhelds[Handheld Devices]
+    end
+
+    subgraph Radio["Radio Layer"]
+        Coverage[Radio Coverage]
+        Backhaul[Backhaul Network]
+    end
+
+    subgraph Core["Core Network"]
+        Control[Control Plane]
+        User[User Plane]
+        Slicing[Network Slicing]
+    end
+
+    subgraph Edge["Edge Processing"]
+        Local[Local Breakout]
+        Wavelength[Wavelength Compute]
+    end
+
+    subgraph Cloud["Cloud Services"]
+        IoTCore[IoT Core]
+        Analytics[Analytics]
+        Storage[Data Storage]
+    end
+
+    Sensors --> Coverage
+    Machines --> Coverage
+    Handhelds --> Coverage
+    Coverage --> Backhaul
+    Backhaul --> Control
+    Backhaul --> User
+    Control --> Slicing
+    User --> Local
+    User --> Wavelength
+    Local --> IoTCore
+    Wavelength --> Analytics
+    IoTCore --> Storage
+    Analytics --> Storage
+```
