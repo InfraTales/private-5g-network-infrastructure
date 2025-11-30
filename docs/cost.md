@@ -43,4 +43,4 @@ At production scale (enterprise campus deployment), the architecture typically c
 
 ## Related Documentation
 
-See `ARCHITECTURE.md` for service details and `DEPLOYMENT.md` for installation guide.
+See the project README for architecture details.md` for installation guide.

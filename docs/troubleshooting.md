@@ -115,4 +115,4 @@ Common issues and resolutions for the **Private 5G Network Infrastructure**.
 - Review network path
 - Consider carrier zone placement
 
-> For architecture details, see `ARCHITECTURE.md`.
+> For architecture details, see the project README.
