@@ -1,122 +1,70 @@
-# Runbook
+# Operations Runbook
 
-Operational guide for deploying and managing the **Private 5G Network Infrastructure**.
+## Overview
+This runbook provides operational procedures for managing and maintaining this infrastructure.
 
-## 1. Deployment
+## Prerequisites
+- AWS CLI configured
+- Terraform/CDK/Pulumi installed
+- Appropriate IAM permissions
 
-### Prerequisites
+## Common Operations
 
-- AWS Private 5G service access approved
-- Site survey completed
-- Spectrum allocation confirmed
-- Physical installation planned
-
-### Deploy Steps
-
+### Deployment
 ```bash
-# Install dependencies
-npm install
+# Development
+./scripts/deploy.sh dev
 
-# Bootstrap CDK
-cdk bootstrap
-
-# Deploy network infrastructure
-cdk deploy --context environment=prod
+# Production
+./scripts/deploy.sh prod
 ```
 
-## 2. Network Setup
+### Monitoring
+- CloudWatch Dashboard: Check AWS Console
+- Alerts: Configured via SNS
+- Logs: CloudWatch Logs
 
-### Create Private 5G Network
+### Troubleshooting
 
-1. Request network in AWS Console
-2. Configure network settings (PLMN, TAC)
-3. Order radio units
-4. Plan coverage areas
+#### Issue: Deployment Fails
+**Symptoms**: Terraform/CDK apply fails
+**Resolution**:
+1. Check AWS credentials
+2. Verify IAM permissions
+3. Review error logs
+4. Check resource quotas
 
-### Radio Unit Installation
+#### Issue: High Costs
+**Symptoms**: Unexpected AWS charges
+**Resolution**:
+1. Review Cost Explorer
+2. Check for unused resources
+3. Verify auto-scaling policies
+4. Review instance types
 
-1. Mount radio units per site survey
-2. Connect to power and backhaul
-3. Activate in AWS Console
-4. Verify coverage
+### Maintenance Windows
+- Preferred: Sunday 02:00-06:00 UTC
+- Avoid: Business hours (09:00-17:00 local time)
 
-## 3. Device Onboarding
+### Escalation
+1. Team Lead
+2. DevOps Manager
+3. On-call Engineer
 
-### Provision SIM Cards
+## Emergency Procedures
 
+### Rollback
 ```bash
-# Order SIMs via AWS Console or API
-aws private-networks create-device-identifier \
-  --network-arn arn:aws:private-networks:... \
-  --device-identifier-type IMSI
+# Terraform
+terraform apply -var-file=previous.tfvars
+
+# CDK
+cdk deploy --previous-version
+
+# Pulumi
+pulumi stack select previous
+pulumi up
 ```
 
-### Activate Device
-
-1. Insert SIM into device
-2. Device authenticates to network
-3. Verify connectivity
-4. Assign to network slice
-
-## 4. Network Slicing
-
-### Create Network Slice
-
-```yaml
-# Example slice configuration
-slice:
-  name: "iot-sensors"
-  sst: 1  # eMBB
-  qos:
-    5qi: 9  # Best effort
-    bandwidth: 10Mbps
-```
-
-### Assign Devices to Slice
-
-- Group devices by use case
-- Apply QoS policies
-- Monitor slice performance
-
-## 5. Monitoring
-
-### Key Metrics to Watch
-
-- **Radio metrics**: RSRP, RSRQ, SINR
-- **Network metrics**: Throughput, latency
-- **Device metrics**: Connection status, data usage
-- **Slice metrics**: QoS compliance
-
-### Dashboards
-
-Pre-configured dashboards for:
-
-- Network coverage map
-- Device connectivity
-- Slice performance
-- Capacity planning
-
-## 6. Maintenance
-
-### Regular Tasks
-
-- Monitor radio unit health weekly
-- Review device inventory monthly
-- Update firmware as released
-- Audit security policies quarterly
-
-### Troubleshooting Device Issues
-
-```bash
-# Check device status
-aws private-networks get-device-identifier \
-  --device-identifier-arn arn:aws:...
-```
-
-### Teardown
-
-```bash
-cdk destroy --context environment=dev
-```
-
-> For troubleshooting common issues, see `docs/troubleshooting.md`.
+### Disaster Recovery
+See [DISASTER_RECOVERY.md](DISASTER_RECOVERY.md)
